@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Sheet - Russian Email Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .table-responsive {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Process Google Sheet</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Sheet Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Google Sheet URL:</strong> {{ sheet_url }}</p>
+                        
+                        {% if preview %}
+                        <div class="alert alert-info">
+                            <h5>Sheet Preview:</h5>
+                            <p>Found {{ preview.total_entries }} entries in the sheet. Here are the first {{ preview.name_entries|length }} entries:</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Domain</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for entry in preview.name_entries %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ entry[0] }}</td>
+                                            <td>{{ entry[1] }}</td>
+                                            <td>{{ entry[2] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="alert alert-info">
+                            <h5>Instructions:</h5>
+                            <p>Your Google Sheet should have the following columns:</p>
+                            <ol>
+                                <li>First Name (in Russian)</li>
+                                <li>Last Name (in Russian)</li>
+                                <li>Company Domain (e.g., company.com)</li>
+                            </ol>
+                            <p>The system will:</p>
+                            <ol>
+                                <li>Transcribe Russian names to Latin alphabet</li>
+                                <li>Generate multiple email variations for each name</li>
+                                <li>Verify each email for validity</li>
+                                <li>Return only valid emails in a new sheet</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <p><strong>Note:</strong> This process may take several minutes depending on the number of names in your sheet.</p>
+                        </div>
+                        
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="timeout" class="form-label">Verification Timeout (seconds per email)</label>
+                                <input type="number" class="form-control" id="timeout" name="timeout" 
+                                       value="{{ timeout|default(30) }}" min="5" max="120">
+                                <div class="form-text">Maximum time to spend verifying each email. Increase for slow servers.</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="stop_on_first_valid" name="stop_on_first_valid" {% if stop_on_first_valid|default(true) %}checked{% endif %}>
+                                <label class="form-check-label" for="stop_on_first_valid">Stop after finding first valid email</label>
+                                <div class="form-text">If checked, verification will stop as soon as a valid email is found for each person.</div>
+                            </div>
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" name="set_settings" value="1" class="btn btn-secondary">Save Settings</button>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Start Processing</button>
+                                <a href="/" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

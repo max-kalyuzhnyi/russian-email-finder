@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Results - Russian Email Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Google Sheet Processing Results</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Processing Complete</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-success">
+                            <h5>Success!</h5>
+                            <p>{{ result_message }}</p>
+                        </div>
+                        
+                        <div class="row text-center mb-4">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3>{{ num_processed }}</h3>
+                                        <p class="text-muted">Names Processed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h3>{{ num_valid }}</h3>
+                                        <p class="text-muted">Valid Emails Found</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <p><strong>Next Steps:</strong></p>
+                            <ul>
+                                <li>Check your Google Sheet for a new tab with the results</li>
+                                <li>The results tab contains only the valid emails that were found</li>
+                                <li>For each name, only the most likely valid email is included</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <a href="/" class="btn btn-primary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

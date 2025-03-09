@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Entry - Russian Email Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Manual Name Entry</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Enter Name and Domain</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="first_name" class="form-label">First Name (Russian)</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" 
+                                       placeholder="Иван" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label">Last Name (Russian)</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" 
+                                       placeholder="Иванов" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="domain" class="form-label">Company Domain</label>
+                                <input type="text" class="form-control" id="domain" name="domain" 
+                                       placeholder="company.com" required>
+                                <div class="form-text">Enter domain without http:// or www. (e.g., company.com)</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="timeout" class="form-label">Verification Timeout (seconds)</label>
+                                <input type="number" class="form-control" id="timeout" name="timeout" 
+                                       value="30" min="5" max="120">
+                                <div class="form-text">Maximum time to spend verifying each email. Increase for slow servers.</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="stop_on_first_valid" name="stop_on_first_valid" checked>
+                                <label class="form-check-label" for="stop_on_first_valid">Stop after finding first valid email</label>
+                                <div class="form-text">If checked, verification will stop as soon as a valid email is found.</div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Generate & Verify Emails</button>
+                                <a href="/" class="btn btn-secondary">Back to Home</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
