@@ -2,14 +2,18 @@
     "version": 2,
     "builds": [
       {
-        "src": "app.py",
+        "src": "wsgi.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "app.py"
+        "dest": "wsgi.py"
       }
-    ]
+    ],
+    "env": {
+      "VERCEL_ENV": "production",
+      "PYTHONUNBUFFERED": "1"
+    }
   }

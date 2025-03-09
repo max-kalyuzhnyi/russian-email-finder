@@ -6,15 +6,18 @@ import logging
 import time
 from typing import Tuple, List, Dict, Any
 import random
+import os
 
 # Configure more detailed logging
+handlers = [logging.StreamHandler()]
+# Only add file logging in development environment
+if os.environ.get('VERCEL_ENV') != 'production':
+    handlers.append(logging.FileHandler("email_verification.log"))
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("email_verification.log"),
-        logging.StreamHandler()
-    ]
+    handlers=handlers
 )
 logger = logging.getLogger("email_verifier")
 

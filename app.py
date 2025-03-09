@@ -14,13 +14,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure application logging
+handlers = [logging.StreamHandler()]
+# Only add file logging in development environment
+if os.environ.get('VERCEL_ENV') != 'production':
+    handlers.append(logging.FileHandler("app.log"))
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("app.log"),
-        logging.StreamHandler()
-    ]
+    handlers=handlers
 )
 logger = logging.getLogger("email_finder_app")
 
@@ -29,7 +31,8 @@ domain_finder_logger = logging.getLogger("domain_finder")
 domain_finder_logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+# Use a secure secret key, but allow it to be set via environment variable for Vercel
+app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
 
 # Get default settings from environment variables
 DEFAULT_CREDENTIALS_PATH = os.getenv('GOOGLE_CREDENTIALS_PATH')
@@ -853,6 +856,11 @@ def cancel_processing():
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
+    # Use PORT environment variable if available (for Heroku/Vercel compatibility)
+    port = int(os.environ.get('PORT', 5000))
     logger.info("Starting Flask application")
     app.run(host='0.0.0.0', port=port)
+
+# Vercel serverless function entry point
+def handler(event, context):
+    return app(event, context)
